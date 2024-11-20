@@ -1,0 +1,67 @@
+import { defineStore } from 'pinia';
+import axios from 'axios';
+
+export const usePaymentStore = defineStore('payment', {
+  state: () => ({
+    paymentResponse: null,
+    executeResponse: null,
+    error: null,
+  }),
+  actions: {
+    async initiatePayment(amount) {
+      try {
+        const response = await axios.post('/api/payment/initiate', { amount });
+        this.paymentResponse = response.data;
+      } catch (error) {
+        this.error = error.response ? error.response.data : error.message;
+      }
+    },
+    async executePayment(paymentID) {
+      try {
+        const response = await axios.post('/api/payment/execute', { paymentID });
+        this.executeResponse = response.data;
+      } catch (error) {
+        this.error = error.response ? error.response.data : error.message;
+      }
+    },
+  },
+});
+
+
+
+
+<template>
+  <div>
+    <form @submit.prevent="handlePayment">
+      <label for="amount">Amount:</label>
+      <input v-model="amount" type="number" id="amount" required />
+      <button type="submit">Initiate Payment</button>
+    </form>
+    
+    <div v-if="paymentStore.paymentResponse">
+      <p>Payment ID: {{ paymentStore.paymentResponse.paymentID }}</p>
+      <button @click="executePayment(paymentStore.paymentResponse.paymentID)">
+        Execute Payment
+      </button>
+    </div>
+
+    <div v-if="paymentStore.executeResponse">Execute Response: {{ paymentStore.executeResponse }}</div>
+    <div v-if="paymentStore.error">Error: {{ paymentStore.error }}</div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { usePaymentStore } from '../stores/payment';
+
+const paymentStore = usePaymentStore();
+const amount = ref(0);
+
+function handlePayment() {
+  paymentStore.initiatePayment(amount.value);
+}
+
+function executePayment(paymentID) {
+  paymentStore.executePayment(paymentID);
+}
+</script>

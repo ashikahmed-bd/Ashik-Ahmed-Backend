@@ -25,7 +25,7 @@ class ProjectSeeder extends Seeder
                 'overview' => 'Our digital agency specializes in providing end-to-end solutions for businesses seeking a robust online presence. Whether you need a stunning website, impactful digital marketing strategies, or advanced SEO to rank higher, we deliver customized services to meet your unique goals. With a focus on creativity, technology, and measurable results, we empower your brand to succeed in today\'s competitive digital landscape.',
                 'tags' => '',
                 'description' => '',
-                'image' => '',
+                'image' => 'projects/agency.jpg',
                 'link' => '',
             ],
 
@@ -39,7 +39,7 @@ class ProjectSeeder extends Seeder
                 'overview' => 'Our agency provides comprehensive e-commerce solutions designed to take your online store to the next level. Whether you need a sleek website, powerful marketing strategies, or seamless payment and shipping integrations, we deliver end-to-end services tailored to your goals. Empower your brand with a user-centric shopping experience, enhanced visibility, and sustainable growth in the competitive e-commerce landscape',
                 'tags' => '',
                 'description' => '',
-                'image' => '',
+                'image' => 'projects/tohashop.jpg',
                 'link' => '',
             ],
 
@@ -53,7 +53,7 @@ class ProjectSeeder extends Seeder
                 'overview' => 'Our NGO management system is designed to simplify and enhance non-profit operations. With powerful tools for loan management, DPS (Deposit Pension Scheme) tracking, member account management, and financial reporting, this all-in-one solution helps NGOs focus on their mission while ensuring transparency and efficiency. Ideal for organizations managing community loans, savings programs, and member services.',
                 'tags' => '',
                 'description' => '',
-                'image' => '',
+                'image' => 'projects/somity.jpg',
                 'link' => '',
             ],
 
@@ -67,7 +67,7 @@ class ProjectSeeder extends Seeder
                 'overview' => 'Our newspaper script offers a comprehensive solution for creating feature-rich news platforms. Combining magazine-style layouts, robust blogging capabilities, and seamless video integration, this platform caters to diverse audiences. Whether you\'re launching a newspaper, a magazine, or a video-focused news site, our solution ensures a modern, responsive, and engaging experience.',
                 'tags' => '',
                 'description' => '',
-                'image' => '',
+                'image' => 'projects/newspaper.jpg',
                 'link' => '',
             ],
         ]);

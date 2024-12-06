@@ -21,7 +21,7 @@ class Project extends Model
 
     public function getImageUrlAttribute()
     {
-        return Storage::disk($this->disk)->url($this->photo);
+        return Storage::disk($this->disk)->url($this->image);
     }
 
     public function getDefaultAttribute(): string

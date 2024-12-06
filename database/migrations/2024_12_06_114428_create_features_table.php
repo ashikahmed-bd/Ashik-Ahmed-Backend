@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('features', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name')->nullable();
+            $table->foreignUuid('package_id')->constrained();
+            $table->string('name');
+            $table->string('description');
             $table->boolean('enabled')->default(true);
-            $table->foreignUuid('plan_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

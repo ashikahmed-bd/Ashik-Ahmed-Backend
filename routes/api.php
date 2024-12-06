@@ -7,7 +7,7 @@ use App\Http\Controllers\LicenseController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SkillController;
-use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -19,6 +19,7 @@ Route::prefix('auth')->group(function (){
 Route::get('plans', [PlanController::class, 'getPlans']);
 Route::get('projects', [ProjectController::class, 'getProjects']);
 Route::get('project/{slug}', [ProjectController::class, 'getProject']);
+Route::get('reviews', [ReviewController::class, 'getReviews']);
 Route::get('reset', [PlanController::class, 'reset']);
 
 Route::get('license/verify', [LicenseController::class, 'verify']);

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Status;
+use App\Http\Resources\ReviewResource;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
-class TestimonialController extends Controller
+class ReviewController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -44,5 +47,14 @@ class TestimonialController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+
+    public function getReviews(Request $request)
+    {
+        $reviews = Review::query()
+            ->where('status', '=', (Status::ACTIVE)->value)
+            ->paginate($request->limit);
+        return ReviewResource::collection($reviews);
     }
 }

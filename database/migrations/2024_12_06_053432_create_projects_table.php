@@ -14,7 +14,6 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('user_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('meta_title')->nullable();

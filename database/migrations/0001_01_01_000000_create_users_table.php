@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,6 +18,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('photo')->default('');
+            $table->text('bio')->nullable();
+            $table->string('role')->default((UserType::USER)->value);
+            $table->string('disk')->default(config('app.disk'));
             $table->rememberToken();
             $table->timestamps();
         });

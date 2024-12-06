@@ -2,28 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\SubscriptionResource;
-use App\Models\Subscription;
-use App\Services\BkashService;
-use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
 
-class SubscriptionController extends Controller
+class BlogController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $subscription = Subscription::query()->paginate();
-        return SubscriptionResource::collection($subscription);
+        //
     }
 
-
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-
+        //
     }
 
     /**

@@ -3,25 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 
 class License extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable, HasUuids;
 
-    protected $fillable = [
-        'user_id',
-        'product_id',
-        'allowed_domain',
-        'license_key',
-        'expiration_date',
-        'status',
-    ];
+    use HasUuids;
+
+
+    protected $guarded = [];
+
 
     protected $appends = [
         'expires_in',

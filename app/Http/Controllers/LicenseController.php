@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\LicenseResource;
+use App\Enums\LicenseType;
+use App\Http\Requests\LicenseRequest;
 use App\Models\License;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 class LicenseController extends Controller
 {
@@ -16,23 +17,31 @@ class LicenseController extends Controller
     public function index()
     {
         $licenses = License::query()->with('user')->paginate();
-        return LicenseResource::collection($licenses);
+        return $licenses;
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(LicenseRequest $request)
     {
-        License::query()->create([
+
+        if ($request->type !== (LicenseType::LIFETIME)->value) {
+            $expiresAt = now()->addDays(30);
+        }
+
+        $license = License::create([
             'user_id' => $request->user_id,
             'product_id' => $request->product_id,
+            'license_key' =>  $this->generateLicenseKey(),
+            'type' => $request->type,
+            'issued_at' => now(),
+            'expires_at' => $expiresAt,
             'allowed_domain' => $request->allowed_domain,
-            'expiration_date' => $request->expiration_date ? $request->expiration_date : Carbon::now()->addDays(365),
-            'license_key' => Str::uuid(),
-            'status' => $request->active ? $request->active : 'active',
+            'active' => true,
         ]);
-        return response()->json(['message' => 'License Created Successfully!']);
+
+        return response()->json(['license' => $license, 'message' => 'License issued successfully.']);
     }
 
     /**
@@ -60,44 +69,50 @@ class LicenseController extends Controller
     }
 
 
-
-    public function licenseValidate(Request $request)
+    public function generateLicenseKey(): string
     {
-        $request->validate([
-            'license_key' => ['required', 'string', 'uuid'],
-            'allowed_domain' => ['required', 'string'],
-        ]);
+        return strtoupper(Str::random('5').'-'.Str::random('5').'-'.Str::random('5').'-'.Str::random('5').'-'.Str::random('5'));
+    }
 
-        // Find the license by domain and key
-        $license = License::query()->where('license_key', $request->license_key)->where('status', 'active')->first();
+    public function verify(Request $request)
+    {
+        $licenseKey = $request->header('X-License-Key');
 
-        // Check if the license key not found!
-        if (!$license){
+        if (!$licenseKey) {
             return response()->json([
-                'status' => false,
-                'message' => 'Invalid license key or lincese source.',
-            ], 404);
+                'success' => false,
+                'message' => 'License key and domain are required.'
+            ], Response::HTTP_BAD_REQUEST);
         }
 
-        // Check if the license key, domain, and expiry date are valid
-        if ($license->expire_at === $request->allowed_domain){
+        // Check for valid license
+        $license = License::query()
+            ->where('license_key', $licenseKey)
+            ->where('allowed_domain', $request->getHost())
+            ->where('active', true)
+            ->first();
+
+        if (!$license) {
             return response()->json([
-                'status' => false,
-                'message' => 'Invalid or expired license key.',
-            ], 403);
+                'success' => false,
+                'message' => 'Invalid license or domain not allowed.'
+            ], Response::HTTP_FORBIDDEN);
         }
 
-        $license->tokens()->where('name', $request->allowed_domain)->delete();
+        if ($license->expires_at && now()->greaterThan($license->expires_at)) {
+            $license->update(['active' => false]);
 
-        if ($license->allowed_domain === $request->allowed_domain) {
-            return LicenseResource::make($license);
+            return response()->json([
+                'success' => false,
+                'message' => 'License has expired.'
+            ], Response::HTTP_FORBIDDEN);
         }
 
         return response()->json([
-            'status' => false,
-            'message' => 'This Domain is not allowed. Please contact the license provider.',
-        ], 403);
-
+            'success' => true,
+            'license' => $license,
+            'message' => 'License is valid.'
+        ], Response::HTTP_OK);
     }
 
 }

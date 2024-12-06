@@ -5,7 +5,6 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -36,24 +35,8 @@ class User extends Authenticatable
     }
 
 
-    public function company(): BelongsTo
+    public function licenses() : HasMany
     {
-        return $this->belongsTo(Company::class);
-    }
-
-
-    public function subscriptions(): HasMany
-    {
-        return $this->hasMany(Subscription::class);
-    }
-
-    public function hasActiveSubscription(): bool
-    {
-        return $this->subscription && $this->subscription->ends_at > now();
-    }
-
-    public function getSubscriptionPlan()
-    {
-        return $this->subscription ? $this->subscription->plan : null;
+        return $this->hasMany(License::class);
     }
 }

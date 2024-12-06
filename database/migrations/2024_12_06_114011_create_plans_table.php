@@ -19,7 +19,6 @@ return new class extends Migration
             $table->double('min_price');
             $table->double('max_price');
             $table->string('billing_cycle')->default(BillingType::ANNUL);
-            $table->json('features')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

@@ -24,9 +24,9 @@ class DatabaseSeeder extends Seeder
             'role' => UserType::ADMIN,
         ]);
 
-//        $this->call([
-//            PlanSeeder::class,
-//            FeatureSeeder::class,
-//        ]);
+        $this->call([
+            PlanSeeder::class,
+            FeatureSeeder::class,
+        ]);
     }
 }

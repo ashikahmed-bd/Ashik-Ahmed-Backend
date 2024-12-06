@@ -12,9 +12,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('blogs', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('user_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->string('slug');
             $table->string('meta_title')->nullable();
@@ -26,6 +25,8 @@ return new class extends Migration
             $table->longText('image')->nullable();
             $table->string('disk')->default(config('app.disk'));
             $table->string('status')->default((Status::ACTIVE)->value);
+
+            $table->foreignUuid('user_id')->constrained('users');
             $table->timestamps();
         });
     }
@@ -35,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('blogs');
+        Schema::dropIfExists('posts');
     }
 };

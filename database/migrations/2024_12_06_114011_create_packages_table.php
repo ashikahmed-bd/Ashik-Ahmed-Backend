@@ -12,13 +12,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('plans', function (Blueprint $table) {
+        Schema::create('packages', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->text('description');
+            $table->string('description')->nullable();
             $table->double('min_price');
             $table->double('max_price');
             $table->string('billing_cycle')->default(BillingType::ANNUL);
+            $table->json('features')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('plans');
+        Schema::dropIfExists('packages');
     }
 };

@@ -11,8 +11,6 @@ use Illuminate\Support\Str;
 class License extends Model
 {
 
-    use HasUuids;
-
 
     protected $guarded = [];
 

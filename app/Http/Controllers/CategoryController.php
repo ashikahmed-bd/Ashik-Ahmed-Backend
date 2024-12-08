@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CategoryResource;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class BlogController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -44,5 +46,14 @@ class BlogController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getCategories()
+    {
+        $categories = Category::with('children')
+            ->where('active', true)
+            ->orderBy('created_at', 'desc')->get();
+        return CategoryResource::collection($categories);
+
     }
 }

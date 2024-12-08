@@ -17,16 +17,19 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         DB::table('users')->insert([
-            'id' => '187497c6-b1c0-4d1b-a3e6-0e9cca00e8a8',
             'name' => 'Ashik Ahmed',
             'email' => 'info@ashikahmed.net',
             'password' => bcrypt('12345678'),
-            'role' => UserType::ADMIN,
+            'role' => (UserType::ADMIN)->value,
         ]);
 
         $this->call([
             PlanSeeder::class,
             FeatureSeeder::class,
+            CategorySeeder::class,
+            ProjectSeeder::class,
+            PostSeeder::class,
+            ReviewSeeder::class,
         ]);
     }
 }

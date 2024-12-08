@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('features', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('plan_id')->constrained();
             $table->string('name');
-            $table->string('description')->nullable();
-            $table->boolean('enabled')->default(true);
+            $table->string('slug')->unique();
+            $table->foreignId('parent_id')->nullable()->constrained('categories');
+            $table->integer('sort_order')->default(0);
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('features');
+        Schema::dropIfExists('categories');
     }
 };

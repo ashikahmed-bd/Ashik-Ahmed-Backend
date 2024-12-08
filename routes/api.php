@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BkashController;
-use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\LicenseController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProjectController;
@@ -19,7 +20,15 @@ Route::prefix('auth')->group(function (){
 Route::get('plans', [PlanController::class, 'getPlans']);
 Route::get('projects', [ProjectController::class, 'getProjects']);
 Route::get('project/{slug}', [ProjectController::class, 'getProject']);
+Route::get('posts', [PostController::class, 'getPosts']);
+Route::get('article/{slug}', [PostController::class, 'getPostBySlug']);
+Route::get('posts/latest', [PostController::class, 'getLatest']);
 Route::get('reviews', [ReviewController::class, 'getReviews']);
+Route::get('categories', [CategoryController::class, 'getCategories']);
+
+
+
+
 Route::get('reset', [PlanController::class, 'reset']);
 
 Route::get('license/verify', [LicenseController::class, 'verify']);
@@ -31,7 +40,7 @@ Route::prefix('bkash')->group(function (){
 });
 
 
-Route::middleware(['auth:sanctum'])->group(function (){
+Route::prefix('admin')->middleware(['auth:sanctum'])->group(function (){
 
     Route::get('licenses', [LicenseController::class, 'index']);
     Route::post('license/store', [LicenseController::class, 'store']);
@@ -53,20 +62,20 @@ Route::middleware(['auth:sanctum'])->group(function (){
     });
 
 
-    Route::prefix('testimonial')->group(function (){
-        Route::get('all', [TestimonialController::class, 'index']);
-        Route::post('store', [TestimonialController::class, 'store']);
-        Route::get('{testimonial}/show', [TestimonialController::class, 'show']);
-        Route::put('{testimonial}/update', [TestimonialController::class, 'update']);
-        Route::delete('{testimonial}/delete', [TestimonialController::class, 'destroy']);
+    Route::prefix('review')->group(function (){
+        Route::get('all', [ReviewController::class, 'index']);
+        Route::post('store', [ReviewController::class, 'store']);
+        Route::get('{review}/show', [ReviewController::class, 'show']);
+        Route::put('{review}/update', [ReviewController::class, 'update']);
+        Route::delete('{review}/delete', [ReviewController::class, 'destroy']);
     });
 
-    Route::prefix('blog')->group(function (){
-        Route::get('all', [BlogController::class, 'index']);
-        Route::post('store', [BlogController::class, 'store']);
-        Route::get('{blog}/show', [BlogController::class, 'show']);
-        Route::put('{blog}/update', [BlogController::class, 'update']);
-        Route::delete('{blog}/delete', [BlogController::class, 'destroy']);
+    Route::prefix('post')->group(function (){
+        Route::get('all', [PostController::class, 'index']);
+        Route::post('store', [PostController::class, 'store']);
+        Route::get('{post}/show', [PostController::class, 'show']);
+        Route::put('{post}/update', [PostController::class, 'update']);
+        Route::delete('{post}/delete', [PostController::class, 'destroy']);
     });
 
 

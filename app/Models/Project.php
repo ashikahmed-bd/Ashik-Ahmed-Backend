@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Cviebrock\EloquentTaggable\Taggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
 class Project extends Model
 {
-    use HasUuids;
+    use Taggable;
 
     protected $guarded = [];
 
@@ -19,7 +19,7 @@ class Project extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getImageUrlAttribute()
+    public function getImageUrlAttribute(): string
     {
         return Storage::disk($this->disk)->url($this->image);
     }

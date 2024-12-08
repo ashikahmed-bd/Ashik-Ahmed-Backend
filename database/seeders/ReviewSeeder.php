@@ -15,7 +15,6 @@ class ReviewSeeder extends Seeder
     {
         DB::table('reviews')->insert([
             [
-                'id' => '83562c5c-cf19-42d5-9034-169a23aa5661',
                 'name' => 'Alfie Moore',
                 'title' => 'CEO',
                 'company' => '',
@@ -24,7 +23,6 @@ class ReviewSeeder extends Seeder
                 'photo' => '',
             ],
             [
-                'id' => '83562c5c-cf19-42d5-9034-169a23aa5669',
                 'name' => 'Patrick C. Baxter',
                 'title' => 'CEO',
                 'company' => 'Solution Answers',
@@ -33,7 +31,6 @@ class ReviewSeeder extends Seeder
                 'photo' => '',
             ],
             [
-                'id' => '83562c5c-cf19-42d5-9034-169a23aa5665',
                 'name' => 'Margaret J. McLane',
                 'title' => 'CEO',
                 'company' => 'Jambo',
@@ -42,7 +39,6 @@ class ReviewSeeder extends Seeder
                 'photo' => '',
             ],
             [
-                'id' => '83562c5c-cf19-42d5-9034-169a23aa5668',
                 'name' => 'Mohammad Murad',
                 'title' => 'CEO',
                 'company' => 'Pixerize Inc',
@@ -51,7 +47,6 @@ class ReviewSeeder extends Seeder
                 'photo' => '',
             ],
             [
-                'id' => '83562c5c-cf19-42d5-9034-169a23aa5868',
                 'name' => 'Bryan Hamilton',
                 'title' => 'CEO',
                 'company' => 'Code Sharks',

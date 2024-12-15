@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -27,6 +28,7 @@ class PostSeeder extends Seeder
                 'image' => 'posts/1.png',
                 'status' => 'published',
                 'published_at' => now(),
+                'category_id' => Category::query()->first()->id,
                 'user_id' => User::query()->first()->id,
             ],
 
@@ -41,6 +43,7 @@ class PostSeeder extends Seeder
                 'image' => 'posts/2.png',
                 'status' => 'published',
                 'published_at' => now(),
+                'category_id' => Category::query()->first()->id,
                 'user_id' => User::query()->first()->id,
             ],
 
@@ -55,6 +58,7 @@ class PostSeeder extends Seeder
                 'image' => 'posts/3.png',
                 'status' => 'published',
                 'published_at' => now(),
+                'category_id' => Category::query()->first()->id,
                 'user_id' => User::query()->first()->id,
             ],
 

@@ -31,13 +31,8 @@ class PostResource extends JsonResource
             'image_url' => $this->image ? $this->image_url : $this->default,
             'disk' => $this->disk,
             'status' => $this->status,
-            $this->mergeWhen($this->whenLoaded('author'), [
-                'author' => [
-                    'id' => $this->author->id,
-                    'name' => $this->author->name,
-                ],
-            ]),
-
+            'category' => CategoryResource::make($this->whenLoaded('category')),
+            'author' => UserResource::make($this->whenLoaded('author')),
             'published_at' => Carbon::parse($this->published_at)->format('d M, Y'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

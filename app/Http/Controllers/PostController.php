@@ -87,7 +87,7 @@ class PostController extends Controller
     public function getPosts(Request $request)
     {
         $posts = Post::query()
-            ->with(['author'])
+            ->with(['author', 'category'])
             ->where('status', '=', (PostStatus::PUBLISHED)->value)
             ->latest()
             ->paginate($request->limit);
@@ -99,6 +99,7 @@ class PostController extends Controller
     public function getPostBySlug(string $slug)
     {
         $post = Post::query()
+            ->with(['author', 'category'])
             ->where('status', '=', (PostStatus::PUBLISHED)->value)
             ->where('slug', '=', $slug)
             ->firstOrFail();

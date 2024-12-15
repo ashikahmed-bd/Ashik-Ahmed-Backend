@@ -14,6 +14,11 @@ class Post extends Model
 
     protected $guarded = [];
 
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

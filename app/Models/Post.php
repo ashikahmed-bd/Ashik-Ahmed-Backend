@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentTaggable\Taggable;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
 {
-    use Taggable;
+    use HasUuids;
 
 
     protected $guarded = [];

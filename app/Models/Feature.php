@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Feature extends Model
 {
+    use HasUuids;
 
     protected $fillable = [
         'plan_id',

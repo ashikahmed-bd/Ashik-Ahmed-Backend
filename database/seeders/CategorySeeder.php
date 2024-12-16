@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\CategoryType;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -16,29 +17,55 @@ class CategorySeeder extends Seeder
     {
         DB::table('categories')->insert([
             [
+                'id' => Str::uuid(),
+                'name' => 'Off Page SEO',
+                'slug' => Str::slug('Off Page SEO'),
+                'type' => CategoryType::Post->value,
+            ],
+
+            [
+                'id' => Str::uuid(),
+                'name' => 'On Page SEO',
+                'slug' => Str::slug('On Page SEO'),
+                'type' => CategoryType::Post->value,
+            ],
+            [
+                'id' => Str::uuid(),
+                'name' => 'Social Media Marketing',
+                'slug' => Str::slug('Social Media Marketing'),
+                'type' => CategoryType::Post->value,
+            ],
+            [
+                'id' => Str::uuid(),
+                'name' => 'search engine optimization (seo)',
+                'slug' => Str::slug('search engine optimization (seo)'),
+                'type' => CategoryType::Post->value,
+            ],
+            [
+                'id' => Str::uuid(),
+                'name' => 'graphic design',
+                'slug' => Str::slug('graphic design'),
+                'type' => CategoryType::PROJECT->value,
+            ],
+            [
+                'id' => Str::uuid(),
+                'name' => 'Web Development',
+                'slug' => Str::slug('Web Development'),
+                'type' => CategoryType::PROJECT->value,
+            ],
+
+            [
+                'id' => Str::uuid(),
                 'name' => 'Web Design',
                 'slug' => Str::slug('Web Design'),
-                'sort_order' => 0,
+                'type' => CategoryType::PROJECT->value,
             ],
+
             [
-                'name' => 'Digital Marketing',
-                'slug' => Str::slug('Digital Marketing'),
-                'sort_order' => 1,
-            ],
-            [
+                'id' => Str::uuid(),
                 'name' => 'UI/UX Design',
                 'slug' => Str::slug('UI/UX Design'),
-                'sort_order' => 2,
-            ],
-            [
-                'name' => 'search engine optimization',
-                'slug' => Str::slug('search engine optimization'),
-                'sort_order' => 3,
-            ],
-            [
-                'name' => 'Reviews',
-                'slug' => Str::slug('Reviews'),
-                'sort_order' => 4,
+                'type' => CategoryType::PROJECT->value,
             ],
         ]);
     }

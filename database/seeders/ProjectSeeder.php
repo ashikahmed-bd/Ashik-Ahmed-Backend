@@ -16,6 +16,7 @@ class ProjectSeeder extends Seeder
     {
         DB::table('projects')->insert([
             [
+                'id' => Str::uuid(),
                 'title' => 'Digital Agency Solutions | Empower Your Business Online',
                 'slug' => Str::slug('Digital Agency Solutions | Empower Your Business Online'),
                 'meta_title' => 'Digital Agency Solutions | Empower Your Business Online',
@@ -29,6 +30,7 @@ class ProjectSeeder extends Seeder
             ],
 
             [
+                'id' => Str::uuid(),
                 'title' => 'Digital Solutions for E-Commerce | Build & Grow Your Online Store',
                 'slug' => Str::slug('Digital Solutions for E-Commerce | Build & Grow Your Online Store'),
                 'meta_title' => 'Digital Solutions for E-Commerce | Build & Grow Your Online Store',
@@ -42,6 +44,7 @@ class ProjectSeeder extends Seeder
             ],
 
             [
+                'id' => Str::uuid(),
                 'title' => 'NGO Management System | Efficient Loan & DPS Management Software',
                 'slug' => Str::slug('NGO Management System | Efficient Loan & DPS Management Software'),
                 'meta_title' => 'NGO Management System | Efficient Loan & DPS Management Software',
@@ -55,6 +58,7 @@ class ProjectSeeder extends Seeder
             ],
 
             [
+                'id' => Str::uuid(),
                 'title' => 'Newspaper Script | Magazine, Blog & Video News Platform',
                 'slug' => Str::slug('Newspaper Script | Magazine, Blog & Video News Platform'),
                 'meta_title' => 'Newspaper Script | Magazine, Blog & Video News Platform',

@@ -14,21 +14,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
             $table->text('meta_keywords')->nullable();
             $table->text('excerpt')->nullable();
+            $table->text('tags')->nullable();
             $table->longText('description')->nullable();
             $table->longText('image')->nullable();
             $table->string('disk')->default(config('app.disk'));
             $table->dateTime('published_at')->nullable();
-            $table->string('status')->default((PostStatus::DRAFT)->value);
+            $table->boolean('active')->default(true);
 
-            $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignUuid('category_id')->nullable()->constrained('categories')->onDelete('cascade');
+            $table->foreignUuid('user_id')->constrained('users');
             $table->timestamps();
         });
     }

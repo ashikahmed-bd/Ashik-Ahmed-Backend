@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+
+    public function loginForm()
+    {
+        return view('auth.login', [
+            'title' => 'Login',
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -18,19 +25,24 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        $user = User::query()->where('email', $request->input('email'))->firstOrFail();
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'active' => 1]))
+        {
+            $request->session()->regenerate();
+            return redirect()->route('home')->with(['success' => 'You are successful.']);
+        }
 
-        return response()->json([
-            'success' => true,
-            'message' => trans('auth.success'),
-            'data' => [
-                'token' => $user->createToken($request->userAgent(), [$user->role], now()->addWeek())->plainTextToken,
-                'token_type' => 'Bearer',
-                'user' => $user,
-            ],
-
-        ], Response::HTTP_OK);
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
     }
 
+
+    public function logout(Request $request)
+    {
+        Auth::guard('web')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('login')->with(['success' => 'Logout Successful.']);
+    }
 
 }

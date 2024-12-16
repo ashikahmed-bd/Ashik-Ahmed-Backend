@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BkashController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LicenseController;
 use App\Http\Controllers\PlanController;
@@ -12,9 +12,7 @@ use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::prefix('auth')->group(function (){
-    Route::post('login', [AuthController::class, 'login']);
-});
+
 
 
 Route::get('plans', [PlanController::class, 'getPlans']);
@@ -41,6 +39,8 @@ Route::prefix('bkash')->group(function (){
 
 
 Route::prefix('admin')->middleware(['auth:sanctum'])->group(function (){
+
+    Route::get('dashboard', [DashboardController::class, 'index']);
 
     Route::get('licenses', [LicenseController::class, 'index']);
     Route::post('license/store', [LicenseController::class, 'store']);
@@ -80,3 +80,5 @@ Route::prefix('admin')->middleware(['auth:sanctum'])->group(function (){
 
 
 });
+
+Route::get('callback', [BkashController::class, 'callback'])->name('callback');

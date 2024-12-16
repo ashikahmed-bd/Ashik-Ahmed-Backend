@@ -7,6 +7,15 @@ use Illuminate\Support\Facades\Artisan;
 
 class SettingsController extends Controller
 {
+
+    public function general()
+    {
+        return view('settings.general', [
+            'title' => 'General Settings'
+        ]);
+
+    }
+
     public function reset()
     {
         Artisan::call('db:seed');

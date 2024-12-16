@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ReviewSeeder extends Seeder
 {
@@ -15,6 +16,7 @@ class ReviewSeeder extends Seeder
     {
         DB::table('reviews')->insert([
             [
+                'id' => Str::uuid(),
                 'name' => 'Alfie Moore',
                 'title' => 'CEO',
                 'company' => '',
@@ -23,6 +25,7 @@ class ReviewSeeder extends Seeder
                 'photo' => '',
             ],
             [
+                'id' => Str::uuid(),
                 'name' => 'Patrick C. Baxter',
                 'title' => 'CEO',
                 'company' => 'Solution Answers',
@@ -31,6 +34,7 @@ class ReviewSeeder extends Seeder
                 'photo' => '',
             ],
             [
+                'id' => Str::uuid(),
                 'name' => 'Margaret J. McLane',
                 'title' => 'CEO',
                 'company' => 'Jambo',
@@ -39,6 +43,7 @@ class ReviewSeeder extends Seeder
                 'photo' => '',
             ],
             [
+                'id' => Str::uuid(),
                 'name' => 'Mohammad Murad',
                 'title' => 'CEO',
                 'company' => 'Pixerize Inc',
@@ -47,6 +52,7 @@ class ReviewSeeder extends Seeder
                 'photo' => '',
             ],
             [
+                'id' => Str::uuid(),
                 'name' => 'Bryan Hamilton',
                 'title' => 'CEO',
                 'company' => 'Code Sharks',

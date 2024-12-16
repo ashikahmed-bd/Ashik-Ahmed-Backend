@@ -143,7 +143,7 @@ class PostController extends Controller
     {
         $posts = Post::query()
             ->with(['author', 'category'])
-            ->where('status', '=', (PostStatus::PUBLISHED)->value)
+            ->where('active', '=', true)
             ->latest()
             ->paginate($request->limit);
 
@@ -155,7 +155,7 @@ class PostController extends Controller
     {
         $post = Post::query()
             ->with(['author', 'category'])
-            ->where('status', '=', (PostStatus::PUBLISHED)->value)
+            ->where('active', '=', true)
             ->where('slug', '=', $slug)
             ->firstOrFail();
 
@@ -166,7 +166,7 @@ class PostController extends Controller
     {
         $posts = Post::query()
             ->with(['author'])
-            ->where('status', '=', (PostStatus::PUBLISHED)->value)
+            ->where('active', '=', true)
             ->latest()->take(5)->get();
 
         return PostResource::collection($posts);

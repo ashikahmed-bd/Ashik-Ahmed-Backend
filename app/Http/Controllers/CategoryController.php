@@ -50,7 +50,7 @@ class CategoryController extends Controller
 
     public function getCategories()
     {
-        $categories = Category::with('children')
+        $categories = Category::query()
             ->where('active', true)
             ->orderBy('created_at', 'desc')->get();
         return CategoryResource::collection($categories);

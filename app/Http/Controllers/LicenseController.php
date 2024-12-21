@@ -31,9 +31,7 @@ class LicenseController extends Controller
 
     public function create()
     {
-
         $users = User::query()->latest()->get();
-        $products = Product::query()->latest()->get();
 
         return view('licenses.create', [
             'title' => 'Create License',

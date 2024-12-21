@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         DB::table('users')->insert([
-            'id' => Str::uuid(),
+            'id' => '88774467-04eb-4817-a45a-d81610d66f8d',
             'name' => 'Ashik Ahmed',
             'title' => 'Full Stack Web Developer',
             'email' => 'info@ashikahmed.net',
@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             FeatureSeeder::class,
             CategorySeeder::class,
             ProjectSeeder::class,
+            ProductSeeder::class,
             PostSeeder::class,
             ReviewSeeder::class,
         ]);

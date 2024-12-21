@@ -102,18 +102,18 @@
                             <div class="dropdown profile_log dropdown">
                                 <div data-toggle="dropdown">
                                     <div class="user icon-menu active">
-                                        <img class="rounded-full" src="{{asset_url(auth()->user()->photo)}}" alt="{{auth()->user()->name}}" width="40">
+                                        <img class="rounded-full" src="#" alt="" width="40">
                                     </div>
                                 </div>
                                 <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu dropdown-menu-end">
                                     <div class="user-email">
                                         <div class="user">
                                             <div class="thumb">
-                                                <img class="rounded-full" src="{{asset_url(auth()->user()->photo)}}" alt="">
+                                                <img class="rounded-full" src="#" alt="">
                                             </div>
                                             <div class="user-info">
-                                                <h5>{{auth()->user()->name}}</h5>
-                                                <span>{{auth()->user()->email}}</span>
+                                                <h5>ff</h5>
+                                                <span>ff</span>
                                             </div>
                                         </div>
                                     </div>
@@ -162,9 +162,10 @@
                         <span class="nav-text">Posts</span>
                     </a>
                 </li>
-                <li><a href="bill.html">
-                        <span><i class="ri-secure-payment-line"></i></span>
-                        <span class="nav-text">Payment</span>
+                <li>
+                    <a href="{{route('license.all')}}">
+                        <i class="ri-secure-payment-line"></i>
+                        <span class="nav-text">Licenses</span>
                     </a>
                 </li>
                 <li><a href="invoice.html">

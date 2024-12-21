@@ -35,3 +35,10 @@ if (!function_exists('DateFormat')) {
         return Carbon::parse($date)->format('d M Y');
     }
 }
+
+if (! function_exists('generateLicenseKey')){
+    function generateLicenseKey(): string
+    {
+        return strtoupper(Str::random('5').'-'.Str::random('5').'-'.Str::random('5').'-'.Str::random('5').'-'.Str::random('5'));
+    }
+}

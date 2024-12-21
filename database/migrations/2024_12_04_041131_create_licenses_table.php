@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\LicenseStatus;
 use App\Enums\LicenseType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -20,7 +21,8 @@ return new class extends Migration
             $table->string('type')->default((LicenseType::TRIAL)->value);
             $table->date('issued_at');
             $table->date('expires_at')->nullable();
-            $table->boolean('active')->default(true);
+            $table->text('signature')->nullable();
+            $table->boolean('revoked')->default(false);
             $table->timestamps();
         });
 

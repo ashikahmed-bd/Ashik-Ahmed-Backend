@@ -18,7 +18,7 @@
                             <label for="allowed_domain" class="form-label">Domain</label>
                             <input type="text" name="allowed_domain" id="allowed_domain" class="form-control" value="{{$license->allowed_domain}}">
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="signature" class="form-label">Signature</label>
                             <textarea id="signature" class="form-control" rows="8"> {!! $license->signature !!}</textarea>

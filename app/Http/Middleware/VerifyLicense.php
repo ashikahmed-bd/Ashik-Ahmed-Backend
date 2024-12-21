@@ -6,6 +6,8 @@ use Closure;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
 class VerifyLicense
@@ -18,14 +20,15 @@ class VerifyLicense
      */
     public function handle(Request $request, Closure $next): Response
     {
+        $license = json_decode(Storage::get($licensePath), true);
 
-        $response = Http::withHeaders([
-            'X-License-Key' => 'DAYDP-7EYE8-BFO7K-9LLSA-WIEEI',
-        ])->post(config('app.url').'/license/verify');
+        $response = Http::post(config('app.url'), $license);
 
-        if ($response->successful()) {
-            return $response->json();
+        if ($response->successful() && $response->json('valid')) {
+            Log::error('License is invalid.');
         }
+
         return $next($request);
+
     }
 }

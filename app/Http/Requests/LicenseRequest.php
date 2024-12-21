@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\LicenseType;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class LicenseRequest extends FormRequest
 {
@@ -22,10 +24,9 @@ class LicenseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
-            'product_id' => 'required|exists:products,id',
-            'type' => 'required|in:trial,subscription,lifetime',
-            'allowed_domain' => 'required|string',
+            'user_id' => ['required', Rule::exists('users', 'id')],
+            'type' => ['required', Rule::enum(LicenseType::class)],
+            'allowed_domain' => ['required', 'string'],
         ];
     }
 }

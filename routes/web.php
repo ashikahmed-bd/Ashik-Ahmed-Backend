@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
 Route::post('login', [AuthController::class, 'login'])->name('authenticate');
 
-Route::middleware(['auth:sanctum'])->group(function (){
+Route::middleware(['auth'])->group(function (){
 
     Route::get('/', [DashboardController::class, 'index'])->name('home');
 
@@ -34,6 +34,7 @@ Route::middleware(['auth:sanctum'])->group(function (){
         Route::get('{id}/edit', [LicenseController::class, 'edit'])->name('license.edit');
         Route::put('{id}/update', [LicenseController::class, 'update'])->name('license.update');
         Route::delete('{id}/delete', [LicenseController::class, 'destroy'])->name('license.delete');
+        Route::get('{id}/download', [LicenseController::class, 'download'])->name('license.download');
     });
 
     Route::prefix('project')->group(function (){

@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\LicenseStatus;
 use App\Http\Requests\LicenseRequest;
 use App\Models\License;
-use App\Models\Product;
 use App\Models\User;
-use App\Services\LicenseService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
-use ZipArchive;
 
 class LicenseController extends Controller
 {

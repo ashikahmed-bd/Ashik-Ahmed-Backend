@@ -166,13 +166,11 @@ class LicenseController extends Controller
         // Find the license by ID
         $license = License::query()->findOrFail($id);
 
-
-
         // Get the path of the license file
         $file_url = "app/private/{$license->license_key}.json";
-        dd($file_url);
+
         // Check if the file exists in the storage
-        if (!Storage::disk('local')->exists($fle_url)) {
+        if (!Storage::disk('local')->exists($file_url)) {
             return response()->json(['message' => 'License file not found.'], 404);
         }
 

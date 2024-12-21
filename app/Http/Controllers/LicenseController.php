@@ -109,6 +109,14 @@ class LicenseController extends Controller
      */
     public function verify(Request $request)
     {
+
+        $request->validate([
+            'domain' => ['required', 'string'],
+            'license_key' => ['required', 'string'],
+            'signature' => ['required', 'string'],
+        ]);
+
+        $domain = $request->input('domain');
         $licenseKey = $request->input('license_key');
         $signature = base64_decode($request->input('signature'));
 
@@ -142,12 +150,18 @@ class LicenseController extends Controller
             ]);
         }
 
+        if ($request->getSchemeAndHttpHost() !== $license->allowed_domain) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Domain not allowed for this license.',
+            ], Response::HTTP_FORBIDDEN);
+        }
 
         if ($license->revoked) {
             return response()->json([
                 'valid' => false,
                 'status' => 'revoked',
-                'message' => 'License has been revoked, Please contact license provider. (880) 1911-742233',
+                'message' => 'License has been revoked, Please contact license provider. (+880) 1911-742233',
             ]);
         }
 
@@ -163,54 +177,16 @@ class LicenseController extends Controller
      */
     public function download(string $id)
     {
-        // Find the license by ID
         $license = License::query()->findOrFail($id);
-
-        // Get the path of the license file
         $file_url = "app/private/{$license->license_key}.json";
 
-        // Check if the file exists in the storage
         if (!Storage::disk('local')->exists($file_url)) {
             return response()->json(['message' => 'License file not found.'], 404);
         }
 
-        // Get the absolute path for download
         $absoluteFilePath = Storage::disk('local')->path($file_url);
 
-        // Serve the file for download and optionally delete after sending
         return response()->download($absoluteFilePath)->deleteFileAfterSend(true);
     }
-
-    /**
-     * @throws Exception
-     */
-    public function validate(): false|int
-    {
-        // Load the public key
-        $publicKey = file_get_contents(storage_path('app/private/public.pem'));
-
-        if (!$publicKey) {
-            throw new Exception('Public key not found.');
-        }
-
-        // Load the license data
-        $licenseData = json_decode(file_get_contents(base_path('license.json')), true);
-
-        if (!$licenseData) {
-            throw new Exception('Invalid license data.');
-        }
-
-        // Extract the signature from the license data
-        $signature = base64_decode($licenseData['signature']);
-
-        // Remove the signature from the data to verify it
-        unset($licenseData['signature']);
-
-        // Verify the signature using the public key
-        $license = openssl_verify(json_encode($licenseData), $signature, $publicKey, OPENSSL_ALGO_SHA256);
-
-        return $license;
-    }
-
 
 }

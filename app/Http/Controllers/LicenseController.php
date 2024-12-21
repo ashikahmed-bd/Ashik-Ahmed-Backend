@@ -84,7 +84,12 @@ class LicenseController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $license = License::query()->findOrFail($id);
+
+        return view('licenses.show', [
+            'title' => 'License Details',
+            'license' => $license,
+        ]);
     }
 
     /**
@@ -111,12 +116,10 @@ class LicenseController extends Controller
     {
 
         $request->validate([
-            'domain' => ['required', 'string'],
             'license_key' => ['required', 'string'],
             'signature' => ['required', 'string'],
         ]);
 
-        $domain = $request->input('domain');
         $licenseKey = $request->input('license_key');
         $signature = base64_decode($request->input('signature'));
 
@@ -146,14 +149,14 @@ class LicenseController extends Controller
             return response()->json([
                 'valid' => false,
                 'status' => 'expired',
-                'message' => 'License has expired.',
+                'message' => 'Your license has expired. Please renew your license to continue using the application & for more information.',
             ]);
         }
 
-        if ($request->getSchemeAndHttpHost() !== $license->allowed_domain) {
+        if ($request->header('Origin') !== $license->allowed_domain) {
             return response()->json([
                 'success' => false,
-                'message' => 'Domain not allowed for this license.',
+                'message' => 'The domain you are trying to access is not allowed. If you believe this is a mistake or need access, please contact our support team.',
             ], Response::HTTP_FORBIDDEN);
         }
 
@@ -161,32 +164,15 @@ class LicenseController extends Controller
             return response()->json([
                 'valid' => false,
                 'status' => 'revoked',
-                'message' => 'License has been revoked, Please contact license provider. (+880) 1911-742233',
+                'message' => 'Your license has been revoked. Please contact support for more information. (+880) 1911-742233',
             ]);
         }
 
         return response()->json([
             'valid' => true,
             'status' => 'active',
-            'message' => 'License is valid.',
+            'signature' => $license->signature,
         ]);
-    }
-
-    /**
-     * Download the specified resource from storage.
-     */
-    public function download(string $id)
-    {
-        $license = License::query()->findOrFail($id);
-        $file_url = "app/private/{$license->license_key}.json";
-
-        if (!Storage::disk('local')->exists($file_url)) {
-            return response()->json(['message' => 'License file not found.'], 404);
-        }
-
-        $absoluteFilePath = Storage::disk('local')->path($file_url);
-
-        return response()->download($absoluteFilePath)->deleteFileAfterSend(true);
     }
 
 }

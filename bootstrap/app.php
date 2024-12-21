@@ -29,12 +29,6 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->render(function (AuthenticationException $e, Request $request) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage(),
-            ],  response::HTTP_UNAUTHORIZED);
-        });
 
         $exceptions->render(function (AccessDeniedHttpException $e) {
             return response()->json([

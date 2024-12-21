@@ -32,9 +32,9 @@ Route::middleware(['auth'])->group(function (){
         Route::get('/create', [LicenseController::class, 'create'])->name('license.create');
         Route::post('/store', [LicenseController::class, 'store'])->name('license.store');
         Route::get('{id}/edit', [LicenseController::class, 'edit'])->name('license.edit');
+        Route::get('{id}/show', [LicenseController::class, 'show'])->name('license.show');
         Route::put('{id}/update', [LicenseController::class, 'update'])->name('license.update');
         Route::delete('{id}/delete', [LicenseController::class, 'destroy'])->name('license.delete');
-        Route::get('{id}/download', [LicenseController::class, 'download'])->name('license.download');
     });
 
     Route::prefix('project')->group(function (){

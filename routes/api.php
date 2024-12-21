@@ -19,21 +19,10 @@ Route::get('posts/latest', [PostController::class, 'getLatest']);
 Route::get('reviews', [ReviewController::class, 'getReviews']);
 Route::get('categories', [CategoryController::class, 'getCategories']);
 
-
 Route::post('license/verify', [LicenseController::class, 'verify']);
 
 
 Route::prefix('bkash')->group(function (){
     Route::post('create', [BkashController::class, 'create']);
     Route::post('execute', [BkashController::class, 'execute']);
-});
-
-
-Route::prefix('license')->group(function (){
-    Route::get('/all', [LicenseController::class, 'index'])->name('license.all');
-    Route::get('/create', [LicenseController::class, 'create'])->name('license.create');
-    Route::post('/store', [LicenseController::class, 'store'])->name('license.store');
-    Route::get('{id}/edit', [LicenseController::class, 'edit'])->name('license.edit');
-    Route::put('{id}/update', [LicenseController::class, 'update'])->name('license.update');
-    Route::delete('{id}/delete', [LicenseController::class, 'destroy'])->name('license.delete');
 });

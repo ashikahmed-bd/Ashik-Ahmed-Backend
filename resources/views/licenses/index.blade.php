@@ -33,9 +33,15 @@
                                     <td>{{$license->type}}</td>
                                     <td>{{$license->issued_at}}</td>
                                     <td>{{$license->expires_at}}</td>
-                                    <td>{{$license->status}}</td>
                                     <td>
-                                        <a href="{{ route('license.download', $license->id) }}">Download</a>
+                                        @if($license->revoked)
+                                            <span class="badge bg-danger">Inactive</span>
+                                        @else
+                                            <span class="badge bg-success">Active</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('license.show', $license->id) }}">View</a>
                                     </td>
                                 </tr>
                             @endforeach
